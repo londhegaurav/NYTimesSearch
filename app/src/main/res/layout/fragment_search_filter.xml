@@ -1,0 +1,133 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.glondhe.nytimessearch.activities.SearchFilter">
+
+    <!--<include-->
+        <!--android:id="@+id/tool_bar"-->
+        <!--layout="@layout/tool_bar"-->
+        <!--></include>-->
+
+    <TextView android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="@string/settings"
+        android:id="@+id/tvTitle"
+        android:textSize="20dp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:textAlignment="gravity"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:minHeight="60dp"
+        android:background="@color/ColorPrimary">
+
+    </TextView>
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_marginTop="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/ll1"
+            android:layout_marginLeft="25dp"
+            android:layout_below="@+id/tvTitle">
+            <TextView android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/bgnDate"
+                android:id="@+id/tvBeginDate" >
+            </TextView>
+            <EditText android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/etBeginDate"
+                android:layout_marginLeft="40dp"
+                android:paddingLeft="10dp"
+                android:width="120dp"
+                android:onClick="onClickDatePicker"
+                >
+            </EditText>
+        </LinearLayout>
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:id="@+id/ll2"
+            android:layout_below="@id/ll1"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="25dp">
+            <TextView android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/sortOrder"
+                android:id="@+id/tvSortOrder" >
+            </TextView>
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/spSortOrder"
+                android:minWidth="120dp"
+                android:maxWidth="120dp"
+                android:layout_alignRight="@id/tvSortOrder"
+                android:paddingLeft="40dp"
+                android:entries="@array/sortOrder"/>
+        </LinearLayout>
+
+        <TextView android:layout_height="wrap_content"
+            android:layout_width="80dp"
+            android:text="@string/deskValues"
+            android:id="@+id/tvDeskvalue"
+            android:layout_below="@id/ll2"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="25dp">
+        </TextView>
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll2"
+            android:id="@+id/ll3"
+            android:layout_toRightOf="@id/tvDeskvalue"
+            android:paddingLeft="25dp">
+            <CheckBox android:id="@+id/checkbox_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cb1"
+                android:onClick="onCheckboxClicked1"/>
+            <CheckBox android:id="@+id/checkbox_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cb2"
+                android:onClick="onCheckboxClicked2"/>
+            <CheckBox android:id="@+id/checkbox_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cb3"
+                android:onClick="onCheckboxClicked3"/>
+        </LinearLayout>
+
+        <Button
+            android:layout_below="@id/ll3"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="210dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="10dp"
+            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:text="@string/save"
+            android:onClick="clickSaveButton"
+            android:id="@+id/btSave"/>
+
+    <Button
+        android:layout_below="@id/ll3"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="10dp"
+        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:text="@string/cancel"
+        android:onClick="clickCancelButton"
+        android:id="@+id/btCancel"/>
+
+</RelativeLayout>

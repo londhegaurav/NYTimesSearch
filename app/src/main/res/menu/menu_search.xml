@@ -1,0 +1,21 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" tools:context=".SearchActivity">
+
+    <item android:id="@+id/action_search"
+        android:orderInCategory="2"
+        android:title="Search"
+        android:icon="@android:drawable/ic_menu_search"
+        app:showAsAction="always|collapseActionView"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        />
+
+    <item android:id="@+id/mi_settings"
+        android:title="@string/settings"
+        android:icon="@drawable/settingslogoblack"
+        android:onClick="onSelectSettings"
+        app:showAsAction="always|collapseActionView"
+        android:menuCategory="system"
+        android:orderInCategory="3"
+        />
+</menu>

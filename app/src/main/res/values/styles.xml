@@ -1,0 +1,36 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+
+    <item name="colorPrimary">@color/ColorPrimary</item>
+    <item name="colorPrimaryDark">@color/ColorPrimaryDark</item>
+    <item name="android:text">@string/app_name</item>
+    <item name="android:textColorPrimary">@color/TextColorPrimary</item>
+        <item name="actionMenuTextColor">@android:color/black</item>
+    </style>
+
+    <!--&lt;!&ndash; Base application theme. &ndash;&gt;-->
+    <!--<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
+        <!--<item name="android:textViewStyle">@style/AppTheme.Widget.TextView</item>-->
+        <!--<item name="android:color">#ff0000</item>-->
+        <!--&lt;!&ndash; Customize your theme here. &ndash;&gt;-->
+    <!--</style>-->
+
+    <!--<style name="AppTheme.Widget"/>-->
+
+    <!--<style name="AppTheme.Widget.TextView" parent="android:Widget.Holo.Light.TextView">-->
+        <!--<item name="fontPath">fonts/Phantasinian.ttf</item>-->
+    <!--</style>-->
+
+    <style name="TextAppearance.FontPath1" parent="android:TextAppearance">
+        <!-- Custom Attr-->
+        <item name="fontPath">fonts/Queens.ttf</item>
+    </style>
+
+    <style name="TextAppearance.FontPath" parent="android:TextAppearance">
+        <!-- Custom Attr-->
+        <item name="android:textColor">@color/TextColorPrimary</item>
+        <item name="fontPath">fonts/Oxford.ttf</item>
+    </style>
+
+</resources>

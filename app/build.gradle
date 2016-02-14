@@ -1,0 +1,38 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.0"
+
+    defaultConfig {
+        applicationId "com.example.glondhe.nytimessearch"
+        minSdkVersion 16
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.loopj.android:android-async-http:1.4.9'
+    compile 'com.google.code.gson:gson:2.4'
+    compile 'com.google.code.gson:gson:2.4'
+    compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
+    compile 'com.squareup.retrofit:converter-gson:2.0.0-beta2'
+    compile 'com.squareup.okhttp:okhttp:2.7.0'
+    compile 'io.reactivex:rxjava:1.0.16'
+    compile 'io.reactivex:rxandroid:1.0.1'
+    compile 'com.squareup.retrofit:adapter-rxjava:2.0.0-beta2'
+    compile 'org.glassfish:javax.annotation:10.0-b28'
+    compile 'com.github.bumptech.glide:glide:3.5.2'
+    compile 'com.android.support:support-v4:22.0.0'
+    compile 'uk.co.chrisjenx:calligraphy:2.1.0'
+}
