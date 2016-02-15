@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.glondhe.nytimessearch.activities.ArticleActivity">
 
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/tool_bar"
+        />
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never"
         android:onClick="addFilter" />
@@ -10,5 +14,12 @@
         android:id="@+id/menytitle" android:title="@string/app_name"
         android:orderInCategory="1"
         >
-    </textView>>
+    </textView>
+    <item
+        android:id="@+id/menu_item_share"
+        android:orderInCategory="2"
+        app:showAsAction="ifRoom"
+        android:title="Share"
+        app:actionProviderClass="android.support.v7.widget.ShareActionProvider" />
+
 </menu>

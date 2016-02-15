@@ -10,6 +10,7 @@ import java.util.ArrayList;
 /**
  * Created by glondhe on 2/12/16.
  */
+
 public class Article implements Serializable{
 
     public String getWebUrl() {

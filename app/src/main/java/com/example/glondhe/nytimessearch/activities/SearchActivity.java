@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -23,6 +24,9 @@ import android.widget.Toast;
 
 import com.example.glondhe.nytimessearch.R;
 import com.example.glondhe.nytimessearch.adapter.RecyclerAdapter;
+import com.example.glondhe.nytimessearch.filter.SearchFilter;
+import com.example.glondhe.nytimessearch.listener.EndlessRecyclerViewScrollListener;
+import com.example.glondhe.nytimessearch.listener.RecyclerItemClickListener;
 import com.example.glondhe.nytimessearch.model.Article;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -57,6 +61,8 @@ public class SearchActivity extends AppCompatActivity {
     private String currentQuery = "";
     private String newQuery = "";
     private Toolbar toolbar;
+    private ShareActionProvider mShareActionProvider;
+    Intent shareIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,26 +99,17 @@ public class SearchActivity extends AppCompatActivity {
                     public void onItemClick(View view, int position) {
                         Intent i = new Intent(getApplicationContext(), ArticleActivity.class);
                         Article article = articles.get(position);
+                        //i.putExtra("Book", Parcels.wrap(article));
                         i.putExtra("article", article);
                         startActivity(i);
                     }
                 })
         );
 
-//        // Setup layout manager for items
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-//// Control orientation of the items
-//// also supports LinearLayoutManager.HORIZONTAL
-//        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-//// Optionally customize the position you want to default scroll to
-//        layoutManager.scrollToPosition(0);
-//// Attach layout manager to the RecyclerView
-//        gvResults.setLayoutManager(layoutManager);
-
         // First param is number of columns and second param is orientation i.e Vertical or Horizontal
         StaggeredGridLayoutManager gridLayoutManager =
                 new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
-// Attach the layout manager to the recycler view
+        // Attach the layout manager to the recycler view
         gvResults.setLayoutManager(gridLayoutManager);
 
         gvResults.setOnScrollListener(new EndlessRecyclerViewScrollListener(gridLayoutManager) {
@@ -141,6 +138,9 @@ public class SearchActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_search, menu);
         MenuItem searchItem = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+//        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(searchItem);
+//        mShareActionProvider.setShareIntent(shareIntent);
+
         searchView.setIconifiedByDefault(false);
         searchView.setQueryHint("Search");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -218,7 +218,8 @@ public class SearchActivity extends AppCompatActivity {
         }
         if (!this.currentQuery.isEmpty()) {
             if (!this.currentQuery.equalsIgnoreCase(query)) {
-                articles.clear();
+//                articles.clear();
+                adapter.clearData();
                 pageoffset = 0;
                 Log.d("DEBUG", "Adding offset"+pageoffset);
                 this.currentQuery = query;
