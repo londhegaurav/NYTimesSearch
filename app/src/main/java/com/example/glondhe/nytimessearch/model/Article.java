@@ -31,8 +31,11 @@ public class Article implements Serializable{
     public Article(JSONObject jsonObject){
 
         try {
+
             this.webUrl = jsonObject.getString("web_url");
             this.headline = jsonObject.getJSONObject("headline").getString("main");
+          //  Log.d("DEBUG", String.valueOf(this.webUrl));
+          //  Log.d("DEBUG", String.valueOf(this.headline));
 
             JSONArray multimedia = jsonObject.getJSONArray("multimedia");
 

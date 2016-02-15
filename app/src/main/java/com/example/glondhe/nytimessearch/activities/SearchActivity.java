@@ -9,20 +9,20 @@ import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.Toast;
 
 import com.example.glondhe.nytimessearch.R;
-import com.example.glondhe.nytimessearch.adapter.ArticleArrayAdapter;
+import com.example.glondhe.nytimessearch.adapter.RecyclerAdapter;
 import com.example.glondhe.nytimessearch.model.Article;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -40,11 +40,10 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class SearchActivity extends AppCompatActivity {
 
     EditText etQuery;
-    GridView gvResults;
+    RecyclerView gvResults;
     Button btnSearch;
-
+    RecyclerAdapter adapter;
     ArrayList<Article> articles;
-    ArticleArrayAdapter adapter;
     String textname;
     RequestParams params;
     private String sortOrder = "";
@@ -83,23 +82,43 @@ public class SearchActivity extends AppCompatActivity {
 
     private void setupViews() {
         etQuery = (EditText) findViewById(R.id.etQuery);
-        gvResults = (GridView) findViewById(R.id.gvResults);
+        gvResults = (RecyclerView) findViewById(R.id.recycler_view);
         btnSearch = (Button) findViewById(R.id.btnSearch);
         articles = new ArrayList<>();
-        adapter = new ArticleArrayAdapter(this, articles);
+     //   adapter = new ArticleArrayAdapter(this, articles);
+        adapter = new RecyclerAdapter(this,articles);
         gvResults.setAdapter(adapter);
-        gvResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(getApplicationContext(), ArticleActivity.class);
-                Article article = articles.get(position);
-                i.putExtra("article", article);
-                startActivity(i);
-            }
-        });
-        gvResults.setOnScrollListener(new EndlessScrollListener() {
+        gvResults.addOnItemTouchListener(new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Intent i = new Intent(getApplicationContext(), ArticleActivity.class);
+                        Article article = articles.get(position);
+                        i.putExtra("article", article);
+                        startActivity(i);
+                    }
+                })
+        );
+
+//        // Setup layout manager for items
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+//// Control orientation of the items
+//// also supports LinearLayoutManager.HORIZONTAL
+//        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+//// Optionally customize the position you want to default scroll to
+//        layoutManager.scrollToPosition(0);
+//// Attach layout manager to the RecyclerView
+//        gvResults.setLayoutManager(layoutManager);
+
+        // First param is number of columns and second param is orientation i.e Vertical or Horizontal
+        StaggeredGridLayoutManager gridLayoutManager =
+                new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+// Attach the layout manager to the recycler view
+        gvResults.setLayoutManager(gridLayoutManager);
+
+        gvResults.setOnScrollListener(new EndlessRecyclerViewScrollListener(gridLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
+                Log.d("DEBUG", "Loading more API calls");
                 callNYSearchAPI();
             }
         });
@@ -201,8 +220,10 @@ public class SearchActivity extends AppCompatActivity {
             if (!this.currentQuery.equalsIgnoreCase(query)) {
                 articles.clear();
                 pageoffset = 0;
+                Log.d("DEBUG", "Adding offset"+pageoffset);
                 this.currentQuery = query;
             } else {
+                Log.d("DEBUG", "Adding offset"+pageoffset);
                 pageoffset += 4;
             }
         }
@@ -226,11 +247,15 @@ public class SearchActivity extends AppCompatActivity {
                 JSONArray articleJsonResults = null;
                 try {
                     Log.d("DEBUG", url.toString() + params.toString());
+                    Log.d("DEBUG", response.toString());
 //                    String hints =  response.getJSONObject("response").getJSONObject("meta").getString("hints");
                     articleJsonResults = response.getJSONObject("response").getJSONArray("docs");
-                    adapter.addAll(Article.fromJSONArray(articleJsonResults));
+                    Log.d("DEBUG", Article.fromJSONArray(articleJsonResults).toString());
+//                    Log.d("DEBUG", String.valueOf(adapter.getItemCount()));
+                    articles.addAll(Article.fromJSONArray(articleJsonResults));
+                    adapter.notifyItemInserted(articles.size() - 1);
                     //                Log.d("DEBUG", hints);
-                    Log.d("DEBUG", adapter.toString());
+                  //  Log.d("DEBUG", adapter.toString());
                 } catch (JSONException e) {
                     Toast.makeText(getApplicationContext(),
                             "ERROR reading response", Toast.LENGTH_SHORT).show();
